@@ -8,81 +8,49 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::all();
+        $queryString = $request->query();
+
+        $query = Post::select("title", "content", "id", "slug", "created_at", "user_id");
+
+        if (key_exists("user_id", $queryString)) {
+            $query->where("user_id", $queryString["user_id"]);
+        }
+
+        if (key_exists("order_by", $queryString)) {
+            if (key_exists("order_direction", $queryString)) {
+                $query->orderBy($queryString["order_by"], $queryString["order_direction"]);
+            } else {
+                $query->orderBy($queryString["order_by"]);
+            }
+        } else {
+            $query->orderBy("created_at", "desc");
+        }
+
+        $posts = $query->paginate(5);
+
+        $posts->load("user:id,name");
+
+        $posts->map(function ($post) {
+            $post->content = substr($post->content, 0, 100) . "...";
+
+            // unset($post->cover_img);
+            // unset($post->category_id);
+            // unset($post->slug);
+
+            return $post;
+        });
 
         return response()->json($posts);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function show($slug)
     {
-        //
-    }
+        $post = Post::where("slug", $slug)->first();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $post->load("tags:id,name", "category:id,name");
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json($post);
     }
 }

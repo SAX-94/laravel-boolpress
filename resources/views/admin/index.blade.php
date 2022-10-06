@@ -1,24 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-5 mr-4 text-center bg-danger">
-                <div class="p-3">
-                    <h2 class="mb-4">Posts</h2>
-                    <div class="mb-1">
-                        <a href="{{route('admin.posts.index')}}" class="btn">Admin</a>
-                    </div>
-                </div>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">{{ __('Dashboard') }}</div>
+
+          <h1>@{{ helloMessage }}</h1>
+
+          <ul>
+            <li v-for="el in lista" v-html="el">
+
+            </li>
+          </ul>
+
+          <div class="card-body">
+            @if (session('status'))
+              <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+              </div>
+            @endif
+
+
+            <div><strong>Utenti registrati:</strong> {{ $users_count }}
+              <a href="{{ route('admin.users.index') }}">Vedi tutti gli utenti</a>
             </div>
-            <div class="col-5 ml-4 text-center bg-danger">
-                <div class="p-3">
-                    <h2 class="mb-4">Details</h2>
-                    <div class="mb-1">
-                        <a href="{{route('admin.users.index')}}" class="btn">Users</a>
-                    </div>
-                </div>
+            <div><strong>Post scritti:</strong> {{ $posts_count }}
+              <a href="{{ route('admin.posts.index') }}">Vedi tutti i post</a>
             </div>
+          </div>
         </div>
+      </div>
     </div>
+  </div>
 @endsection

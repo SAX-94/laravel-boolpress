@@ -1,51 +1,82 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-
-        <div class="nav mb-4">
-            <a class="btn btn-primary" href="{{ route('admin.posts.create') }}">Add a new post</a>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1>Tutti i posts</h1>
+          <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">
+            Crea nuovo post
+          </a>
         </div>
-
-
-        <div class="row">
-
+        <table class="table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Titolo</th>
+              <th>Slug</th>
+              <th>Autore</th>
+              <th>Categoria / Tags</th>
+              <th class="text-center">Azioni</th>
+            </tr>
+          </thead>
+          <tbody>
             @foreach ($posts as $post)
-                <div class="col-4">
-                    <div class="post shadow h-100">
-                        <img src="{{ asset('/storage/' . $post['image']) }}" class="img-fluid" alt="">
-                        <div class="p-3 mb-3">
-                            <div class="title">
-                                {{ $post['title'] }}
-                            </div>
-                            <div class="description">
-                                {{ $post['description'] }}
-                            </div>
-                            <div class="row">
-                                <div class="col-6 author">
-                                    {{ $post->user->name }}
-                                </div>
-                                <div class="col-6">
-                                    {{ $post['created_at'] }}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center align-items-end pb-3">
-                            <a class="btn btn-success mx-2" href="{{ route('admin.posts.show', $post->id) }}"><i
-                                    class="fa-solid fa-eye"></i></a>
-                            <a class="btn btn-primary mx-2" href="{{ route('admin.posts.edit', $post->id) }}"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
-                            <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger mx-2"><i
-                                        class="fa-solid fa-trash-can"></i></button>
-                            </form>
+              <tr>
+                <td>{{ $post->id }}</td>
+                <td>{{ $post->title }}</td>
+                <td>{{ $post->slug }}</td>
+                <td>{{ $post->user->name }}</td>
+                <td>
+                  <div>{{ $post->category ? $post->category->name : '' }}</div>
+                  <div>{{ $post->tags->implode('name', ' - ') }}</div>
+                </td>
+                <td>
+                  <a class="btn btn-info btn-sm" href="{{ route('admin.posts.show', ['post' => $post->slug]) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-activity">
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                      <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                  </a>
+                  <a class="btn btn-warning btn-sm" href="{{ route('admin.posts.edit', ['post' => $post->slug]) }}">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                      class="feather feather-activity">
+                      <polygon points="14 2 18 6 7 17 3 17 3 13 14 2"></polygon>
+                      <line x1="3" y1="22" x2="21" y2="22"></line>
+                    </svg>
+                  </a>
+                  {{-- <form class="d-inline-block" action="{{ route('admin.posts.destroy', ['post' => $post->slug]) }}"
+                    method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger btn-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" class="feather feather-activity">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        <line x1="10" y1="11" x2="10" y2="17"></line>
+                        <line x1="14" y1="11" x2="14" y2="17"></line>
+                      </svg>
+                    </button>
+                  </form> --}}
 
-                        </div>
-                    </div>
-                </div>
+                  <crud-delete-btn action="{{ route('admin.posts.destroy', ['post' => $post->slug]) }}">
+                    @csrf
+                    @method('DELETE')
+                  </crud-delete-btn>
+                </td>
+              </tr>
             @endforeach
-        </div>
+          </tbody>
+        </table>
+
+        {{ $posts->links() }}
+      </div>
     </div>
+  </div>
 @endsection

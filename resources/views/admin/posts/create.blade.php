@@ -1,31 +1,104 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+          <h1>Creazione nuovo post</h1>
+          <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-activity">
+              <line x1="20" y1="12" x2="4" y2="12"></line>
+              <polyline points="10 18 4 12 10 6"></polyline>
+            </svg> Tutti i posts
+          </a>
+        </div>
+        <div>
+          @if ($errors->any())
+            <div class="alert alert-danger">
+              <ul>
+                @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+                @endforeach
+              </ul>
+            </div>
+          @endif
+        </div>
         <form action="{{ route('admin.posts.store') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-3">
-                <label for="title" class="form-label">Post Title</label>
-                <input type="text" class="form-control" name="title" id="title" placeholder="Title">
-            </div>
+          @csrf
 
-            <div class="mb-3">
-                <label for="description" class="form-label">Post Text.....</label>
-                <textarea class="form-control" name="description" id="description" rows="3" placeholder="Description"></textarea>
-            </div>
+          <div class="form-group">
+            <label for="cover_img_file" class="form-label">Immagine di copertina</label>
 
-            <div class="mb-3">
-                <label for="thumb" class="form-label">Post Image</label>
-                <input type="file" class="form-control" name="image" id="image" placeholder="image">
+            <div class="d-flex">
+              <input type="file" name="cover_img" class="form-control-file @error('cover_img') is-invalid @enderror"
+                id="cover_img_file" value="{{ old('cover_img') }}">
             </div>
+            @error('cover_img')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
 
-            <div class="d-flex g-2">
-                <button type="submit" class="btn btn-success mx-2">Add</button>
-                <button type="reset" class="btn btn-secondary mx-2">Clear</button>
+          <div class="form-group">
+            <label>Titolo</label>
+            <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
+              placeholder="Inserisci il titolo" value="{{ old('title') }}" required>
+            @error('title')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
 
-                <a href="{{ route('admin.posts.index') }}" class="btn btn-danger mx-2">Home</a>
-            </div>
+          <div class="form-group">
+            <label>Contenuto</label>
+            <textarea name="content" class="form-control @error('content') is-invalid @enderror" rows="10"
+              placeholder="Inizia a scrivere qualcosa..." required>{{ old('content') }}</textarea>
+            @error('content')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <label>Categoria</label>
+            <select type="text" name="category_id" class="form-control @error('category_id') is-invalid @enderror"
+              placeholder="Inserisci il titolo">
+              <option value=""></option>
+              @foreach ($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+              @endforeach
+            </select>
+            @error('category_id')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <label>Tags</label>
+            <select type="text" name="tags[]" class="form-control @error('tags') is-invalid @enderror" multiple>
+              @foreach ($tags as $tag)
+                <option value="{{ $tag->id }}">
+                  {{ $tag->name }}</option>
+              @endforeach
+            </select>
+            @error('tags')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-success">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="feather feather-activity">
+                <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                <polyline points="7 3 7 8 15 8"></polyline>
+              </svg> Crea post
+            </button>
+          </div>
         </form>
-
+      </div>
     </div>
+  </div>
 @endsection

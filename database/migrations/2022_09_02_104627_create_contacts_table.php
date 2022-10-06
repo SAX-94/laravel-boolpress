@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeysToPostsTable extends Migration
+class CreateContactsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class AddForeignKeysToPostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            $table->unsignedBigInteger("user_id")->after("id");
-            $table->foreign("user_id")
-            ->references("id")
-            ->on("users");
+        Schema::create('contacts', function (Blueprint $table) {
+            $table->id();
+            $table->string("email");
+            $table->string("message");
+            $table->string("attachment")->nullable();
+            $table->timestamps();
         });
     }
 
@@ -28,8 +29,6 @@ class AddForeignKeysToPostsTable extends Migration
      */
     public function down()
     {
-        Schema::table('posts', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('contacts');
     }
 }

@@ -5138,6 +5138,41 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrudDeleteBtn.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrudDeleteBtn.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    action: String
+  },
+  data: function data() {
+    return {
+      forceDelete: false
+    };
+  },
+  methods: {
+    onSubmit: function onSubmit(e) {
+      if (confirm("Vuoi cancellare davvero l'elemento?")) {
+        if (confirm("Vuoi eseguire una cancellazione definitiva?")) {
+          this.forceDelete = true;
+        }
+
+        setTimeout(function () {
+          e.target.submit();
+        }, 300);
+      }
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
@@ -5152,6 +5187,82 @@ __webpack_require__.r(__webpack_exports__);
     console.log('Component mounted.');
   }
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrudDeleteBtn.vue?vue&type=template&id=10efa138&":
+/*!**********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CrudDeleteBtn.vue?vue&type=template&id=10efa138& ***!
+  \**********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function render() {
+  var _vm = this,
+      _c = _vm._self._c;
+
+  return _c("form", {
+    staticClass: "d-inline-block",
+    attrs: {
+      action: _vm.action + (_vm.forceDelete ? "?force-delete" : ""),
+      method: "post"
+    },
+    on: {
+      submit: function submit($event) {
+        $event.preventDefault();
+        return _vm.onSubmit.apply(null, arguments);
+      }
+    }
+  }, [_vm._t("default"), _vm._v(" "), _c("button", {
+    staticClass: "btn btn-danger btn-sm",
+    attrs: {
+      type: "submit"
+    }
+  }, [_c("svg", {
+    staticClass: "feather feather-activity",
+    attrs: {
+      xmlns: "http://www.w3.org/2000/svg",
+      width: "24",
+      height: "24",
+      viewBox: "0 0 24 24",
+      fill: "none",
+      stroke: "currentColor",
+      "stroke-width": "2",
+      "stroke-linecap": "round",
+      "stroke-linejoin": "round"
+    }
+  }, [_c("polyline", {
+    attrs: {
+      points: "3 6 5 6 21 6"
+    }
+  }), _vm._v(" "), _c("path", {
+    attrs: {
+      d: "M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
+    }
+  }), _vm._v(" "), _c("line", {
+    attrs: {
+      x1: "10",
+      y1: "11",
+      x2: "10",
+      y2: "17"
+    }
+  }), _vm._v(" "), _c("line", {
+    attrs: {
+      x1: "14",
+      y1: "11",
+      x2: "14",
+      y2: "17"
+    }
+  })])])], 2);
+};
+
+var staticRenderFns = [];
+render._withStripped = true;
+
 
 /***/ }),
 
@@ -28226,7 +28337,7 @@ function normalizeComponent(
 
 "use strict";
 /* WEBPACK VAR INJECTION */(function(global, setImmediate) {/*!
- * Vue.js v2.7.8
+ * Vue.js v2.7.10
  * (c) 2014-2022 Evan You
  * Released under the MIT License.
  */
@@ -28870,13 +28981,13 @@ let initProxy;
             'referenced during render. Make sure that this property is reactive, ' +
             'either in the data option, or for class-based components, by ' +
             'initializing the property. ' +
-            'See: https://vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
+            'See: https://v2.vuejs.org/v2/guide/reactivity.html#Declaring-Reactive-Properties.', target);
     };
     const warnReservedPrefix = (target, key) => {
         warn$2(`Property "${key}" must be accessed with "$data.${key}" because ` +
             'properties starting with "$" or "_" are not proxied in the Vue instance to ' +
             'prevent conflicts with Vue internals. ' +
-            'See: https://vuejs.org/v2/api/#data', target);
+            'See: https://v2.vuejs.org/v2/api/#data', target);
     };
     const hasProxy = typeof Proxy !== 'undefined' && isNative(Proxy);
     if (hasProxy) {
@@ -30998,8 +31109,13 @@ function lifecycleMixin(Vue) {
             vm.$el.__vue__ = vm;
         }
         // if parent is an HOC, update its $el as well
-        if (vm.$vnode && vm.$parent && vm.$vnode === vm.$parent._vnode) {
-            vm.$parent.$el = vm.$el;
+        let wrapper = vm;
+        while (wrapper &&
+            wrapper.$vnode &&
+            wrapper.$parent &&
+            wrapper.$vnode === wrapper.$parent._vnode) {
+            wrapper.$parent.$el = wrapper.$el;
+            wrapper = wrapper.$parent;
         }
         // updated hook is called by the scheduler to ensure that children are
         // updated in a parent's updated hook.
@@ -31552,8 +31668,7 @@ function doWatch(source, cb, { immediate, deep, flush = 'pre', onTrack, onTrigge
     let oldValue = isMultiSource ? [] : INITIAL_WATCHER_VALUE;
     // overwrite default run
     watcher.run = () => {
-        if (!watcher.active &&
-            !(flush === 'pre' && instance && instance._isBeingDestroyed)) {
+        if (!watcher.active) {
             return;
         }
         if (cb) {
@@ -32114,17 +32229,20 @@ const onBeforeUpdate = createLifeCycle('beforeUpdate');
 const onUpdated = createLifeCycle('updated');
 const onBeforeUnmount = createLifeCycle('beforeDestroy');
 const onUnmounted = createLifeCycle('destroyed');
-const onErrorCaptured = createLifeCycle('errorCaptured');
 const onActivated = createLifeCycle('activated');
 const onDeactivated = createLifeCycle('deactivated');
 const onServerPrefetch = createLifeCycle('serverPrefetch');
 const onRenderTracked = createLifeCycle('renderTracked');
 const onRenderTriggered = createLifeCycle('renderTriggered');
+const injectErrorCapturedHook = createLifeCycle('errorCaptured');
+function onErrorCaptured(hook, target = currentInstance) {
+    injectErrorCapturedHook(hook, target);
+}
 
 /**
  * Note: also update dist/vue.runtime.mjs when adding new exports to this file.
  */
-const version = '2.7.8';
+const version = '2.7.10';
 /**
  * @internal type is manually declared in <root>/types/v3-define-component.d.ts
  */
@@ -32184,12 +32302,12 @@ var vca = /*#__PURE__*/Object.freeze({
   onUpdated: onUpdated,
   onBeforeUnmount: onBeforeUnmount,
   onUnmounted: onUnmounted,
-  onErrorCaptured: onErrorCaptured,
   onActivated: onActivated,
   onDeactivated: onDeactivated,
   onServerPrefetch: onServerPrefetch,
   onRenderTracked: onRenderTracked,
-  onRenderTriggered: onRenderTriggered
+  onRenderTriggered: onRenderTriggered,
+  onErrorCaptured: onErrorCaptured
 });
 
 const seenObjects = new _Set();
@@ -32243,11 +32361,16 @@ let uid$1 = 0;
  */
 class Watcher {
     constructor(vm, expOrFn, cb, options, isRenderWatcher) {
-        recordEffectScope(this, activeEffectScope || (vm ? vm._scope : undefined));
-        if ((this.vm = vm)) {
-            if (isRenderWatcher) {
-                vm._watcher = this;
-            }
+        recordEffectScope(this, 
+        // if the active effect scope is manually created (not a component scope),
+        // prioritize it
+        activeEffectScope && !activeEffectScope._vm
+            ? activeEffectScope
+            : vm
+                ? vm._scope
+                : undefined);
+        if ((this.vm = vm) && isRenderWatcher) {
+            vm._watcher = this;
         }
         // options
         if (options) {
@@ -32511,7 +32634,7 @@ function initData(vm) {
     if (!isPlainObject(data)) {
         data = {};
         warn$2('data functions should return an object:\n' +
-                'https://vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
+                'https://v2.vuejs.org/v2/guide/components.html#data-Must-Be-a-Function', vm);
     }
     // proxy data on instance
     const keys = Object.keys(data);
@@ -32807,6 +32930,7 @@ function initMixin$1(Vue) {
         vm.__v_skip = true;
         // effect scope
         vm._scope = new EffectScope(true /* detached */);
+        vm._scope._vm = true;
         // merge options
         if (options && options._isComponent) {
             // optimize internal component instantiation
@@ -35342,7 +35466,16 @@ function normalizeDirectives(dirs, vm) {
         }
         res[getRawDirName(dir)] = dir;
         if (vm._setupState && vm._setupState.__sfc) {
-            dir.def = dir.def || resolveAsset(vm, '_setupState', 'v-' + dir.name);
+            const setupDef = dir.def || resolveAsset(vm, '_setupState', 'v-' + dir.name);
+            if (typeof setupDef === 'function') {
+                dir.def = {
+                    bind: setupDef,
+                    update: setupDef,
+                };
+            }
+            else {
+                dir.def = setupDef;
+            }
         }
         dir.def = dir.def || resolveAsset(vm.$options, 'directives', dir.name, true);
     }
@@ -40067,6 +40200,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+Vue.component('crud-delete-btn', __webpack_require__(/*! ./components/CrudDeleteBtn.vue */ "./resources/js/components/CrudDeleteBtn.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -40120,6 +40254,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/CrudDeleteBtn.vue":
+/*!***************************************************!*\
+  !*** ./resources/js/components/CrudDeleteBtn.vue ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CrudDeleteBtn_vue_vue_type_template_id_10efa138___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CrudDeleteBtn.vue?vue&type=template&id=10efa138& */ "./resources/js/components/CrudDeleteBtn.vue?vue&type=template&id=10efa138&");
+/* harmony import */ var _CrudDeleteBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CrudDeleteBtn.vue?vue&type=script&lang=js& */ "./resources/js/components/CrudDeleteBtn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CrudDeleteBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CrudDeleteBtn_vue_vue_type_template_id_10efa138___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CrudDeleteBtn_vue_vue_type_template_id_10efa138___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CrudDeleteBtn.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CrudDeleteBtn.vue?vue&type=script&lang=js&":
+/*!****************************************************************************!*\
+  !*** ./resources/js/components/CrudDeleteBtn.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudDeleteBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CrudDeleteBtn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrudDeleteBtn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudDeleteBtn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CrudDeleteBtn.vue?vue&type=template&id=10efa138&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/CrudDeleteBtn.vue?vue&type=template&id=10efa138& ***!
+  \**********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudDeleteBtn_vue_vue_type_template_id_10efa138___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!../../../node_modules/vue-loader/lib??vue-loader-options!./CrudDeleteBtn.vue?vue&type=template&id=10efa138& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CrudDeleteBtn.vue?vue&type=template&id=10efa138&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudDeleteBtn_vue_vue_type_template_id_10efa138___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_loaders_templateLoader_js_ref_6_node_modules_vue_loader_lib_index_js_vue_loader_options_CrudDeleteBtn_vue_vue_type_template_id_10efa138___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -40210,8 +40413,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Sax\Documents\Boolean Repos\laravel-boolpress\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Sax\Documents\Boolean Repos\laravel-boolpress\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/florianleica/Boolean/laravel_boolpress/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/florianleica/Boolean/laravel_boolpress/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

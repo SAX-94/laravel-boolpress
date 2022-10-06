@@ -25,7 +25,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
+        'password', 'remember_token'
     ];
 
     /**
@@ -37,14 +37,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
-    public function details(){
-        return $this->hasOne("App\UserDetail");
-    }
-
-
-    public function posts(){
+    public function posts()
+    {
         return $this->hasMany("App\Post");
     }
-
 }

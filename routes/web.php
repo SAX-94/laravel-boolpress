@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,32 +14,21 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
-
-
-
-
-
 
 Auth::routes();
 
+
 Route::middleware("auth")
-  ->namespace("Admin") 
-  ->name("admin.") 
-  ->prefix("admin")
-  ->group(function () {
-    Route::get('/', 'HomeController@index')->name('index');    
-    Route::resource("posts", "PostController");
-    Route::resource("users" , "UserController");
-  });
+    ->name("admin.")
+    ->namespace("Admin")
+    ->prefix("admin")
+    ->group(function () {
 
+        Route::get('/', 'HomeController@index')->name('home');
 
-  Route::get('/public', function () {
-    return view('public');
-})->name('public');
+        Route::resource("posts", "PostController");
+    });
 
-Route::get("{any?}", function () {
-  return view("public");
+Route::get('{any?}', function () {
+    return view('frontend');
 })->where("any", ".*");
